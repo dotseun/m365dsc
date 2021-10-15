@@ -41,15 +41,13 @@ jobs:
           $source = "./Modules/Microsoft365DSC/"
           $destination = "C:\Program Files\WindowsPowerShell\Modules"
           Copy-Item -Path $source -Recurse -Destination $destination -Container -Force
-      - name: Connect to MSGraph
-        shell: powershell
-        run: New-Item -Path 'C:\Users\runneradmin\.graph' -ItemType Directory
       - name: Run ReverseDSC
         shell: powershell
         env:
           PUBLIC_USERNAME: ${{ secrets.PUBLIC_USERNAME }}
           PUBLIC_PASSWORD: ${{ secrets.PUBLIC_PASSWORD }}
         run: |
+          New-Item -Path 'C:\Users\runneradmin\.graph' -ItemType Directory
           Set-ExecutionPolicy Unrestricted -Force
           Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules" -Recurse | Unblock-File
           $CredPassword = ConvertTo-SecureString $env:PUBLIC_PASSWORD -AsPlainText -Force
