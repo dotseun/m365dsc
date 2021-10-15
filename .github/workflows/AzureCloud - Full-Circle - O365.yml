@@ -43,7 +43,7 @@ jobs:
           Copy-Item -Path $source -Recurse -Destination $destination -Container -Force
       - name: Connect to MSGraph
         shell: powershell
-        run: Connect-MsGraph -Scopes "User.ReadWrite.All","Group.ReadWrite.All"
+        run: Connect-MgGraph -AccessToken $AccessToken
       - name: Run ReverseDSC
         shell: powershell
         env:
