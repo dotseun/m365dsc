@@ -41,6 +41,9 @@ jobs:
           $source = "./Modules/Microsoft365DSC/"
           $destination = "C:\Program Files\WindowsPowerShell\Modules"
           Copy-Item -Path $source -Recurse -Destination $destination -Container -Force
+      - name: Connect to MSGraph
+        shell: powershell
+        run: Connect-MgGraph -Scopes "User.ReadWrite.All","Group.ReadWrite.All"
       - name: Run ReverseDSC
         shell: powershell
         env:
